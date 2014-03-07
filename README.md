@@ -3,8 +3,6 @@ Shopify Wholesale
 
 Shopify Wholesale
 
-![alt tag](http://url/to/img.png)
-
 Adding wholesale functionality to your Shopify requires 4 steps:
 
 1. Change your Checkout &rarr; Settings &rarr; Customer Accounts so that "Accounts are optional"
