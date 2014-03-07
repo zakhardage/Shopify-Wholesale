@@ -35,3 +35,34 @@ TROUBLESHOOTING
 If you're having trouble, check to see if your theme employs <a href="http://docs.shopify.com/support/your-website/themes/can-i-make-my-theme-use-products-with-multiple-options">Shopify's multiple option JavaScript helper</a>. You can tell if you find this code in your theme.liquid header:
 
 {{ 'option_selection.js' | shopify_asset_url | script_tag }}
+
+You'll need to delete this link. Then remove the callback and instantiation of Shopify.OptionSelectors from either the theme.liquid or product.liquid template. You can remove these by deleting the entire jquery script that looks something like this:
+
+&lt;script&gt;
+<br>// &lt;![CDATA[  
+<br>var selectCallback = function(variant, selector) {
+<br>  if (variant) {
+<br>    if (variant.available) {
+<br>      // Selected a valid variant that is available.
+<br>      $('#add').removeClass('disabled').removeAttr('disabled').val('Add to Cart').fadeTo(200,1);
+<br>    } else {
+<br>      // Variant is sold out.
+<br>      $('#add').val('Sold Out').addClass('disabled').attr('disabled', 'disabled').fadeTo(200,0.5);        
+<br>    }
+<br>    // Whether the variant is in stock or not, we can update the price and compare at price.
+<br>    if ( variant.compare_at_price &gt; variant.price ) {
+<br>      $('#price-field').html('&lt;span class=&quot;product-price on-sale&quot;&gt;'+ Shopify.formatMoney(variant.price, &quot;&quot;) +'&lt;/span&gt;'+'&amp;nbsp;&lt;s class=&quot;product-compare-price&quot;&gt;'+Shopify.formatMoney(variant.compare_at_price, &quot;&quot;)+ '&lt;/s&gt;');
+<br>    } else {
+<br>      $('#price-field').html('&lt;span class=&quot;product-price&quot;&gt;'+ Shopify.formatMoney(variant.price, &quot;&quot;) + '&lt;/span&gt;' );
+<br>    }        
+<br>  } else {
+<br>    // variant doesn't exist.
+<br>    $('#add').val('Unavailable').addClass('disabled').attr('disabled', 'disabled').fadeTo(200,0.5);
+<br>  }
+<br>}
+<br>// initialize multi selector for product
+<br>jQuery(function($) {
+<br>  new Shopify.OptionSelectors(&quot;product-select&quot;, { product: , onVariantSelected: selectCallback });
+<br>});
+<br>// ]]&gt;
+<br>&lt;/script&gt;
