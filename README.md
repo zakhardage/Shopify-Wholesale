@@ -38,7 +38,7 @@ If you're having trouble, check to see if your theme employs <a href="http://doc
 
 You'll need to delete this link. Then remove the callback and instantiation of Shopify.OptionSelectors from either the theme.liquid or product.liquid template. You can remove these by deleting the entire jquery script that looks something like this:
 
-<div style="color:gray">
+<div style="color:#888888">
 &lt;script&gt;
 <br />// &lt;![CDATA[
 <br />var selectCallback = function(variant, selector) {
