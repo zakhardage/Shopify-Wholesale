@@ -18,11 +18,12 @@ Adding wholesale functionality to your Shopify requires 4 steps:
 
 The simplest way is to add wholesale.liquid to your theme's snippets folder. Then, find this code (or something similar) in your product.liquid template:
 
-&lt;select id=&quot;product-select&quot; name=&quot;id&quot; class=&quot;hidden&quot;&gt;<br />
-{% for variant in product.variants %}<br />
-&lt;option value=&quot;{{ variant.id }}&quot;&gt;{{ variant.title }} - {{ variant.price | money }}&lt;/option&gt;<br />
-{% endfor %}<br />
-&lt;/select&gt;<br />
+       <select id="product-select" name="id" class="hidden">
+       {% for variant in product.variants %}
+         <option value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
+       {% endfor %}
+       </select>
+
 
 and replace it with {% include 'wholesale' %}.
 
