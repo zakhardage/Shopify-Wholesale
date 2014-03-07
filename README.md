@@ -11,7 +11,7 @@ Adding wholesale functionality to your Shopify requires 4 steps:
 ![alt tag](https://raw.github.com/zakhardage/shopify-wholesale/master/images/settings-checkout.png)
 
 2. Add the 'wholesale' tag to customer tags
-![alt tag](https://raw.github.com/zakhardage/shopify-wholesale/branch/path/to/customer-tags.png)
+![alt tag](https://raw.github.com/zakhardage/shopify-wholesale/master/images/customer-tags.png)
 
 3. Add wholesale variants &mdash; add another for each of your existing product variants with "wholesale" in the title
 ![alt tag](https://raw.github.com/zakhardage/shopify-wholesale/master/images/product.variants.png)
