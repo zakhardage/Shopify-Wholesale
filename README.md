@@ -1,4 +1,4 @@
-shopify-wholesale
+Shopify Wholesale
 =================
 
 Shopify Wholesale
