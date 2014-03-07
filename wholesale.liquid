@@ -1,20 +1,4 @@
-{% assign price = product.price_max %}
-{% assign range = false %}
-{% if customer and customer.tags contains 'wholesale' %}
-	{% for variant in product.variants %}
-		{% unless price == variant.price %}{% assign count = count | plus:1 %}{% endunless %}
-		{% if variant.title contains 'wholesale' and variant.price < price %}{% assign price = variant.price %}{% endif %}
-	{% endfor %}
-{% else %}
-	{% for variant in product.variants %}
-		{% unless price == variant.price %}{% assign count = count | plus:1 %}{% endunless %}
-		{% unless variant.title contains 'wholesale' and variant.price < price %}{% assign price = variant.price %}{% endunless %}
-	{% endfor %}
-{% endif %}
-{% if count > 1 %}{% assign range = true %}{% endif %}
-<p id="price">{% if range %}from {% endif %}{{ price | money }}</p>
-
-<select name="id" id="product-select" onchange="variantSelect(this.value)">
+<select name="id" id="product-select">
 	{% for variant in product.variants %}
 		{% if customer and customer.tags contains 'wholesale' %}
 			{% if variant.title contains 'wholesale' %}<option value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>{% endif %}
@@ -23,13 +7,3 @@
 		{% endif %}
 	{% endfor %}
 </select>
-
-<script>
-	function variantSelect(variantID) {
-		{% for variant in product.variants %}
-			if(variantID == "{{ variant.id }}") {
-				document.getElementById('price').innerHTML = "{{ variant.price | money }}";
-			}
-		{% endfor %}
-	}
-</script>
