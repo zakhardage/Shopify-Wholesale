@@ -1,7 +1,9 @@
 {% assign price = product.price_max %}
 {% assign range = false %}
 {% if customer and customer.tags contains 'wholesale' %}
+	{% assign wholesale-customer = true %}
 	{% for variant in product.variants %}
+		{% if variant.title contains 'wholesale' %}{% assign wholesale-product = true %}{% endif %}
 		{% unless price == variant.price %}{% assign count = count | plus:1 %}{% endunless %}
 		{% if variant.title contains 'wholesale' and variant.price < price %}{% assign price = variant.price %}{% endif %}
 	{% endfor %}
@@ -16,7 +18,7 @@
 
 <select name="id" id="product-select" onchange="variantSelect(this.value)">
 	{% for variant in product.variants %}
-		{% if customer and customer.tags contains 'wholesale' %}
+		{% if wholesale-customer and wholesale-product %}
 			{% if variant.title contains 'wholesale' %}<option value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>{% endif %}
 		{% else %}
 			{% unless variant.title contains 'wholesale' %}<option value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>{% endunless %}

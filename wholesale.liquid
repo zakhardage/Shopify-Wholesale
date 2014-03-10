@@ -1,6 +1,9 @@
+{% for variant in product.variants %}{% if variant.title contains 'wholesale' %}{% assign wholesale-product = true %}{% endif %}{% endfor %}
+{% if customer and customer.tags contains 'wholesale' %}{% assign wholesale-customer = true %}{% endif %}
+
 <select name="id" id="product-select">
 	{% for variant in product.variants %}
-		{% if customer and customer.tags contains 'wholesale' %}
+		{% if wholesale-customer and wholesale-product %}
 			{% if variant.title contains 'wholesale' %}<option value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>{% endif %}
 		{% else %}
 			{% unless variant.title contains 'wholesale' %}<option value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>{% endunless %}
