@@ -1,8 +1,6 @@
 {% if customer and customer.tags contains 'wholesale' %}{% assign wholesale-customer = true %}{% endif %}
 {% for variant in product.variants %}{% if variant.title contains 'wholesale' %}{% assign wholesale-product = true %}{% endif %}{% endfor %}
-
 {% assign price = product.price_max %}
-
 {% if wholesale-customer and wholesale-product %}
 	{% for variant in product.variants %}
 		{% if variant.title contains 'wholesale' %}
@@ -30,8 +28,6 @@
 		{% endunless %}
 	{% endfor %}
 {% endif %}
-
-
 {% if count > 1 %}{% assign range = true %}{% endif %}
 <p id="price">{% if compare %}<del>{{ compare-price | money }}</del>{% endif %} {% if range %}from {% endif %}{{ price | money }}</p>
 

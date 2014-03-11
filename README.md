@@ -25,7 +25,7 @@ The simplest way is to add wholesale.liquid to your theme's snippets folder. The
 
 and replace it with {% include 'wholesale' %}.
 
-If you also want to update the displayed product price when a customer selects an option from the variants dropdown menu, you can integrate the code from the wholesale-with-price.liquid file in to your product.liquid template. Replace your existing variants select object with lines 19-27. Then replace where your template is currently displaying the product price with lines 1-17. Then, add lines 29-37, the javascript function to the template footer or your theme.liquid footer.
+If you also want to update the displayed product price when a customer selects an option from the variants dropdown menu, you can integrate the code from the wholesale-with-price.liquid file in to your product.liquid template. Replace your existing variants select object with lines 34-42. Then replace where your template is currently displaying the product price with lines 1-32. Then, add lines 44-52, the javascript function to the template footer or your theme.liquid footer.
 
 <hr />
 
