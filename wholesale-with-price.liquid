@@ -1,17 +1,37 @@
+{% if customer and customer.tags contains 'wholesale' %}{% assign wholesale-customer = true %}{% endif %}
+{% for variant in product.variants %}{% if variant.title contains 'wholesale' %}{% assign wholesale-product = true %}{% endif %}{% endfor %}
+
 {% assign price = product.price_max %}
-{% if customer and customer.tags contains 'wholesale' %}
-	{% assign wholesale-customer = true %}
+
+{% if wholesale-customer and wholesale-product %}
 	{% for variant in product.variants %}
-		{% if variant.title contains 'wholesale' %}{% assign wholesale-product = true %}{% endif %}
-		{% unless price == variant.price %}{% assign count = count | plus:1 %}{% endunless %}
-		{% if variant.title contains 'wholesale' and variant.price < price %}{% assign price = variant.price %}{% endif %}
+		{% if variant.title contains 'wholesale' %}
+			{% if variant.price < price %}
+				{% unless price == variant.price %}{% assign count = count | plus:1 %}{% endunless %}
+				{% assign price = variant.price %}
+			{% endif %}
+			{% if variant.compare_at_price %}
+				{% assign compare = true %}
+				{% assign compare-price = variant.compare_at_price %}
+			{% endif %}
+		{% endif %}
 	{% endfor %}
 {% else %}
 	{% for variant in product.variants %}
-		{% unless price == variant.price %}{% assign count = count | plus:1 %}{% endunless %}
-		{% unless variant.title contains 'wholesale' and variant.price < price %}{% assign price = variant.price %}{% endunless %}
+		{% unless variant.title contains 'wholesale' %}
+			{% if variant.price < price %}
+				{% unless price == variant.price %}{% assign count = count | plus:1 %}{% endunless %}
+				{% assign price = variant.price %}
+			{% endif %}
+			{% if variant.compare_at_price %}
+				{% assign compare = true %}
+				{% assign compare-price = variant.compare_at_price %}
+			{% endif %}
+		{% endunless %}
 	{% endfor %}
 {% endif %}
+
+
 {% if count > 1 %}{% assign range = true %}{% endif %}
 <p id="price">{% if range %}from {% endif %}{{ price | money }}</p>
 
