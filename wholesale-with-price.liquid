@@ -1,5 +1,4 @@
 {% assign price = product.price_max %}
-{% assign range = false %}
 {% if customer and customer.tags contains 'wholesale' %}
 	{% assign wholesale-customer = true %}
 	{% for variant in product.variants %}
