@@ -33,7 +33,7 @@
 
 
 {% if count > 1 %}{% assign range = true %}{% endif %}
-<p id="price">{% if range %}from {% endif %}{{ price | money }}</p>
+<p id="price">{% if compare %}<del>{{ compare-price | money }}</del>{% endif %} {% if range %}from {% endif %}{{ price | money }}</p>
 
 <select name="id" id="product-select" onchange="variantSelect(this.value)">
 	{% for variant in product.variants %}
@@ -49,7 +49,7 @@
 	function variantSelect(variantID) {
 		{% for variant in product.variants %}
 			if(variantID == "{{ variant.id }}") {
-				document.getElementById('price').innerHTML = "{{ variant.price | money }}";
+				document.getElementById('price').innerHTML = "{% if variant.compare_at_price %}<del>{{ variant.compare_at_price }}</del>{% endif %} {{ variant.price | money }}";
 			}
 		{% endfor %}
 	}
