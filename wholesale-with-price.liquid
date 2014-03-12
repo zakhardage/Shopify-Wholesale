@@ -4,8 +4,8 @@
 {% if wholesale-customer and wholesale-product %}
 	{% for variant in product.variants %}
 		{% if variant.title contains 'wholesale' %}
+			{% unless price == variant.price %}{% assign count = count | plus:1 %}{% endunless %}
 			{% if variant.price < price %}
-				{% unless price == variant.price %}{% assign count = count | plus:1 %}{% endunless %}
 				{% assign price = variant.price %}
 			{% endif %}
 			{% if variant.compare_at_price %}
@@ -17,8 +17,8 @@
 {% else %}
 	{% for variant in product.variants %}
 		{% unless variant.title contains 'wholesale' %}
+			{% unless price == variant.price %}{% assign count = count | plus:1 %}{% endunless %}
 			{% if variant.price < price %}
-				{% unless price == variant.price %}{% assign count = count | plus:1 %}{% endunless %}
 				{% assign price = variant.price %}
 			{% endif %}
 			{% if variant.compare_at_price %}
