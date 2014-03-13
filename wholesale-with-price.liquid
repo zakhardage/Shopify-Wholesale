@@ -5,9 +5,9 @@
 	{% for variant in product.variants %}
 		{% if variant.title contains 'wholesale' %}
 			{% unless price == variant.price %}{% assign count = count | plus:1 %}{% endunless %}
-			{% if variant.price < price %}
+			{% unless variant.price > price %}
 				{% assign price = variant.price %}
-			{% endif %}
+			{% endunless %}
 			{% if variant.compare_at_price %}
 				{% assign compare = true %}
 				{% assign compare-price = variant.compare_at_price %}
@@ -18,9 +18,9 @@
 	{% for variant in product.variants %}
 		{% unless variant.title contains 'wholesale' %}
 			{% unless price == variant.price %}{% assign count = count | plus:1 %}{% endunless %}
-			{% if variant.price < price %}
+			{% unless variant.price > price %}
 				{% assign price = variant.price %}
-			{% endif %}
+			{% endunless %}
 			{% if variant.compare_at_price %}
 				{% assign compare = true %}
 				{% assign compare-price = variant.compare_at_price %}
