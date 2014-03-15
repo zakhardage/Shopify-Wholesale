@@ -66,4 +66,4 @@ You'll need to delete this link. Then remove the callback and instantiation of S
 	// ]]>
 	</script>
 	
-I'll update this later to include multiple option selectors.
+I'll update this later to include multiple option selectors, quantity minimums, and cart minimums.
