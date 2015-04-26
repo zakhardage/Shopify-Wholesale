@@ -1,0 +1,24 @@
+{% comment %}The elements for minimum quantities{% endcomment %}
+
+{% if settings.qty-min contains product.type %}
+	{% assign qty-min = settings.qty-min | split:product.type %}
+	{% assign qty-min = qty-min[1] %}
+	{% if qty-min contains ',' %}{% assign qty-min = qty-min | split:',' %}{% assign qty-min = qty-min[0] %}{% endif %}
+	{% assign minimum = true %}
+{% endif %}
+
+<form action="/cart/add" method="post" {% if minimum %}onsubmit="return qtyCheck()"{% endif %}>
+
+<input type="number" name="quantity" class="quantity" value="{% if minimum %}{{ qty-min }}{% else %}1{% endif %}" />
+	
+{% if minimum %}
+	<script>
+		function qtyCheck() {
+			var qty = $('.quantity').val();
+			if(qty < {{ qty-min | minus:1 }}) {
+				alert("The minimum quantity for wholesale {{ product.title }} is {{ qty-min }}.")
+				return false;
+			}
+		}
+	</script>
+{% endif %}

@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Wholesale Quantity Minimums",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "qty-min",
+        "label": "Enter values separated by a comma in this format type:qty"
+      }
+    ]
+  }
+]

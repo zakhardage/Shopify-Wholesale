@@ -66,4 +66,34 @@ You'll need to delete this link. Then remove the callback and instantiation of S
 	// ]]>
 	</script>
 	
-I'll update this later to include multiple option selectors, quantity minimums, and cart minimums.
+<hr />
+
+QUANTITY MINIMUMS
+
+1. Replace <form action="/cart/add" method="post"> with <form action="/cart/add" method="post" {% if minimum == true %}onsubmit="return qtyCheck()"{% endif %}>
+	
+2. Above the opening form tag, add:
+	{% if settings.qty-min contains product.type %}
+		{% assign qty-min = settings.qty-min | split:product.type %}
+		{% assign qty-min = qty-min[1] %}
+		{% if qty-min contains ',' %}{% assign qty-min = qty-min | split:',' %}{% assign qty-min = qty-min[0] %}{% endif %}
+		{% assign minimum = true %}
+	{% endif %}
+
+3. If there is an input field in the form, replace it with this <input type="number" name="quantity" class="quantity" value="{% if minimum %}{{ qty-min }}{% else %}1{% endif %}" />
+
+4. Add this script to the bottom of the page:
+	{% if minimum %}
+		<script>
+			function qtyCheck() {
+				var qty = $('.quantity').val();
+				if(qty < {{ qty-min | minus:1 }}) {
+					alert("The minimum quantity for wholesale {{ product.title }} is {{ qty-min }}.")
+					return false;
+				}
+			}
+		</script>
+	{% endif %}
+
+
+I'll update this later to include multiple option selectors, and cart minimums.
