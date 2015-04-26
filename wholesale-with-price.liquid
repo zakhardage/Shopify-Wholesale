@@ -1,9 +1,12 @@
-{% if customer and customer.tags contains 'wholesale' %}{% assign wholesale-customer = true %}{% endif %}
-{% for variant in product.variants %}{% if variant.title contains 'wholesale' %}{% assign wholesale-product = true %}{% endif %}{% endfor %}
+{% for variant in product.variants %}{% assign title = variant.title | handle %}{% if title contains 'wholesale' %}{% assign wholesale-product = true %}{% endif %}{% endfor %}
+{% if customer %}{% if customer.tags contains 'Wholesale' or customer.tags contains 'wholesale' %}{% assign wholesale-customer = true %}{% endif %}
+{% if wholesale-customer and wholesale-product %}{% assign wholesale = true %}{% endif %}
+
 {% assign price = product.price_max %}
-{% if wholesale-customer and wholesale-product %}
+{% if wholesale %}
 	{% for variant in product.variants %}
-		{% if variant.title contains 'wholesale' %}
+		{% assign title = variant.title | handle %}
+		{% if title contains 'wholesale' %}
 			{% unless price == variant.price %}{% assign count = count | plus:1 %}{% endunless %}
 			{% unless variant.price > price %}
 				{% assign price = variant.price %}
@@ -16,7 +19,8 @@
 	{% endfor %}
 {% else %}
 	{% for variant in product.variants %}
-		{% unless variant.title contains 'wholesale' %}
+		{% assign title = variant.title | handle %}
+		{% unless title contains 'wholesale' %}
 			{% unless price == variant.price %}{% assign count = count | plus:1 %}{% endunless %}
 			{% unless variant.price > price %}
 				{% assign price = variant.price %}
@@ -33,10 +37,11 @@
 
 <select name="id" id="product-select" onchange="variantSelect(this.value)">
 	{% for variant in product.variants %}
-		{% if wholesale-customer and wholesale-product %}
-			{% if variant.title contains 'wholesale' %}<option value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>{% endif %}
+		{% assign title = variant.title | handle %}
+		{% if wholesale %}
+			{% if title contains 'wholesale' %}<option value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>{% endif %}
 		{% else %}
-			{% unless variant.title contains 'wholesale' %}<option value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>{% endunless %}
+			{% unless title contains 'wholesale' %}<option value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>{% endunless %}
 		{% endif %}
 	{% endfor %}
 </select>
