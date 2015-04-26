@@ -70,6 +70,10 @@ You'll need to delete this link. Then remove the callback and instantiation of S
 
 QUANTITY MINIMUMS
 
+1. Add the fields from the settings_schema.json file to your theme's settings_schema.json file
+
+2. Enter the minimum wholesale product quantities in your theme settings separated by a comma in this format type:qty
+
 1. Replace <form action="/cart/add" method="post"> with <form action="/cart/add" method="post" {% if minimum == true %}onsubmit="return qtyCheck()"{% endif %}>
 	
 2. Above the opening form tag, add:
